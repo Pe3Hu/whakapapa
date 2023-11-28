@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpnpag8lgqpg2"]
+
+[ext_resource type="Script" path="res://scene/2/timeline.gd" id="1_n18u6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7paps"]
+
+[node name="Timeline" type="MarginContainer"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_n18u6")
+
+[node name="BG" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7paps")
+
+[node name="Stages" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Actions" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1

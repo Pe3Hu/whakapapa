@@ -1,0 +1,38 @@
+[
+ {
+  "cooling": 18,
+  "boiling": 36,
+  "splashing": 6,
+  "frequency": 1
+ },
+ {
+  "cooling": 0,
+  "boiling": 25,
+  "splashing": 5,
+  "frequency": 2
+ },
+ {
+  "cooling": 0,
+  "boiling": 16,
+  "splashing": 4,
+  "frequency": 3
+ },
+ {
+  "cooling": 3,
+  "boiling": 9,
+  "splashing": 3,
+  "frequency": 4
+ },
+ {
+  "cooling": 6,
+  "boiling": 4,
+  "splashing": 2,
+  "frequency": 5
+ },
+ {
+  "cooling": 8,
+  "boiling": 1,
+  "splashing": 1,
+  "frequency": 6
+ }
+]
