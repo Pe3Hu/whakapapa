@@ -19,15 +19,24 @@ var anchor = null
 
 func set_attributes(input_: Dictionary) -> void:
 	struggle = input_.struggle
-	descendant = input_.descendant
 	side = input_.side
+	descendant = input_.descendant
+	descendant.timeline = self
 	
-	ticks.current = 0
-	ticks.max = 120
-	pace = 1
+	set_marker_and_bg_color()
+	reset_vars()
+	update_bg_size()
+
+
+func reset_vars() -> void:
 	time = Time.get_unix_time_from_system()
-	anchor = Vector2(0, 0)
-	
+	ticks.current = 0
+	ticks.next = 0
+	ticks.max = 120
+	pace = 2
+
+
+func set_marker_and_bg_color() -> void:
 	var input = {}
 	input.proprietor = self
 	input.type = "ancestor"
@@ -38,45 +47,53 @@ func set_attributes(input_: Dictionary) -> void:
 	var style = StyleBoxFlat.new()
 	style.bg_color = Global.color.side[side]
 	bg.set("theme_override_styles/panel", style)
-	
+
+
+func update_bg_size() -> void:
+	bg.custom_minimum_size = Global.vec.size.tick
+	bg.custom_minimum_size.x *= ticks.max
 	#custom_minimum_size = Global.vec.size.tick
 	#custom_minimum_size.x *= ticks.max
-	update_bg_size()
+	anchor = Vector2(0, 24)
 
 
 func add_action(frequency_: int) -> void:
 	var input = {}
 	input.timeline = self
-	input.stages = Global.dict.stage.frequency[frequency_]
+	input.frequency = frequency_
 	
 	var action = Global.scene.action.instantiate()
 	actions.add_child(action)
 	action.set_attributes(input)
 
 
-func update_bg_size() -> void:
-	bg.custom_minimum_size = Global.vec.size.tick
-	bg.custom_minimum_size.x *= ticks.max
-
-
-func _on_timer_timeout():
-	if pace >= 0.5:
+func tween_ticks() -> void:
+	if stages.get_child_count() > 0:
 		var stage = stages.get_child(0)
-		ticks.current = stage.get_upcoming_ticks()
+		var gap = Vector2(Global.vec.size.tick.x, 0)
+		gap.x *= -ticks.next
+		gap += anchor
+		var value = stage.get_upcoming_ticks()-ticks.current-ticks.next
+		
+		var _time = 1.0 / pace
+		tween = create_tween()
+		tween.tween_property(stages, "position", gap, _time).from_current()
+		tween.tween_property(stage.bar, "value", value, _time)
+		#print([descendant.index, -ticks.current, stages.get_child(0).type, stages.position.x])
+		tween.tween_callback(stage.collapse_check)
+
+
+func tween_ticks_old() -> void:
+	if stages.get_child_count() > 0:
 		var gap = Vector2(Global.vec.size.tick.x, 0)
 		gap.x *= -ticks.current
-		var time = 1.0 / pace
+		var _time = 1.0 / pace
 		tween = create_tween()
-		tween.tween_property(stages, "position", gap, time).from(Vector2(0, 0))
+		tween.tween_property(stages, "position", gap, _time).from(Vector2(0, 0))
 		tween.tween_callback(add_elapsed_ticks)
-		#decelerate_spin()
-	else:
-		#print("end at", Time.get_unix_time_from_system() - time)
-		#pool.dice_stopped(self)
-		#var unit = stages.get_child(3).unit
-		pass
 
 
 func add_elapsed_ticks() -> void:
-	var stage = stages.get_child(0)
-	stage.add_elapsed_ticks(ticks.current)
+	if stages.get_child_count() > 0:
+		var stage = stages.get_child(0)
+		stage.add_elapsed_ticks(ticks.current)

@@ -26,6 +26,7 @@ func init_arr() -> void:
 	arr.edge = [1, 2, 3, 4, 5, 6]
 	arr.stage = ["coolin", "boiling", "splashing"]
 	arr.state = ["vigor", "standard", "fatigue"]
+	arr.side = ["left", "right"]
 
 
 func init_num() -> void:

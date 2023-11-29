@@ -15,7 +15,7 @@ func _input(event) -> void:
 		match event.keycode:
 			KEY_SPACE:
 				if event.is_pressed() && !event.is_echo():
-					pass
+					sketch.battleground.struggles.get_child(0).skip_shortest_ticks()
 
 
 func _process(delta_) -> void:

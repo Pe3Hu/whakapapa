@@ -5,6 +5,8 @@ extends MarginContainer
 
 var ancestor = null
 var index = null
+var target = null
+var timeline = null
 
 
 func set_attributes(input_: Dictionary) -> void:
@@ -20,3 +22,15 @@ func set_attributes(input_: Dictionary) -> void:
 	input.limits.fatigue = 0.25
 	input.total = 100
 	health.set_attributes(input)
+
+
+func choose_action() -> void:
+	if timeline.struggle.winner == null:
+		Global.rng.randomize()
+		var action = 6 - index * 5#Global.rng.randi_range(1, 6)
+		timeline.add_action(action)
+
+
+func apply_effect() -> void:
+	Global.rng.randomize()
+	var damage = Global.rng.randi_range(6, 14)

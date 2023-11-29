@@ -51,3 +51,7 @@ func get_percentage() -> int:
 
 func reset() -> void:
 	bar.value = bar.max_value
+
+
+func _on_progress_bar_changed():
+	pass # Replace with function body.

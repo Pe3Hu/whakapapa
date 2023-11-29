@@ -6,6 +6,7 @@ extends MarginContainer
 @onready var right = $VBox/Timelines/Right
 
 var battleground = null
+var winner = null
 
 
 func set_attributes(input_: Dictionary) -> void:
@@ -14,13 +15,19 @@ func set_attributes(input_: Dictionary) -> void:
 	for descendant in input_.descendants:
 		add_descendant(descendant)
 	
-	left.add_action(1)
-	right.add_action(4)
+	
+	for side in Global.arr.side:
+		var timeline = get(side)
+		timeline.descendant.choose_action()
+	
+	
+	left.descendant.target = right.descendant
+	right.descendant.target = left.descendant
+	
+	#skip_shortest_ticks()
 
 
 func add_descendant(descendant_: MarginContainer) -> void:
-	var parent = descendant_.get_parent()
-	var b = descendant_.ancestor.descendants
 	descendant_.ancestor.descendants.remove_child(descendant_)
 	descendants.add_child(descendant_)
 	
@@ -35,3 +42,29 @@ func add_descendant(descendant_: MarginContainer) -> void:
 	
 	var timeline = get(input.side)
 	timeline.set_attributes(input)
+
+ 
+func get_shortest_stage() -> MarginContainer:
+	var datas = []
+	
+	for side in Global.arr.side:
+		var timeline = get(side)
+		
+		if timeline.stages.get_child_count() > 0:
+			var data = {}
+			data.stage = timeline.stages.get_child(0)
+			data.duration = data.stage.get_upcoming_ticks()
+			datas.append(data)
+	
+	datas.sort_custom(func(a, b): return a.duration < b.duration)
+	return datas.front().stage
+
+
+func skip_shortest_ticks() -> void:
+	var stage = get_shortest_stage()
+	print(stage.get_upcoming_ticks())
+	
+	for side in Global.arr.side:
+		var timeline = get(side)
+		timeline.ticks.next = stage.get_upcoming_ticks()
+		timeline.tween_ticks()

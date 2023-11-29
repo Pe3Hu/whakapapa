@@ -42,6 +42,7 @@ theme_override_styles/background = SubResource("StyleBoxFlat_q3sqh")
 theme_override_styles/fill = SubResource("StyleBoxFlat_neula")
 max_value = 0.0
 step = 1.0
+fill_mode = 1
 show_percentage = false
 
 [node name="Value" type="Label" parent="."]
@@ -51,3 +52,5 @@ theme_override_fonts/font = ExtResource("2_afbgq")
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="changed" from="ProgressBar" to="." method="_on_progress_bar_changed"]
