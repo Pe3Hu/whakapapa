@@ -4,10 +4,13 @@ extends MarginContainer
 @onready var descendants = $Descendants
 
 var cradle = null
+var index = null
 
 
 func set_attributes(input_: Dictionary) -> void:
 	cradle  = input_.cradle
+	index = int(Global.num.index.ancestor)
+	Global.num.index.ancestor += 1
 	
 	init_descendants()
 

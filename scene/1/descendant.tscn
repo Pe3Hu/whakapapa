@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://ci6fwxd7olbot"]
+[gd_scene load_steps=4 format=3 uid="uid://ci6fwxd7olbot"]
 
 [ext_resource type="Script" path="res://scene/1/descendant.gd" id="1_i4hme"]
+[ext_resource type="PackedScene" uid="uid://cnlof2444v3rr" path="res://scene/3/health.tscn" id="2_2pwdg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7paps"]
 
@@ -25,3 +26,10 @@ script = ExtResource("1_i4hme")
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_7paps")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="Health" parent="VBox" instance=ExtResource("2_2pwdg")]
+layout_mode = 2

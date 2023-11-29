@@ -37,6 +37,8 @@ alignment = 1
 
 [node name="Timelines" type="VBoxContainer" parent="VBox"]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 alignment = 1
 
 [node name="Left" parent="VBox/Timelines" instance=ExtResource("2_bvf4c")]

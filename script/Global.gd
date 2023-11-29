@@ -24,12 +24,14 @@ func _ready() -> void:
 
 func init_arr() -> void:
 	arr.edge = [1, 2, 3, 4, 5, 6]
-	
 	arr.stage = ["coolin", "boiling", "splashing"]
+	arr.state = ["vigor", "standard", "fatigue"]
 
 
 func init_num() -> void:
 	num.index = {}
+	num.index.ancestor = 0
+	num.index.descendant = 0
 
 
 func init_dict() -> void:
@@ -115,8 +117,6 @@ func init_stage() -> void:
 				data[key] = int(stage[key])
 		
 		dict.stage.frequency[int(stage.frequency)] = data
-	
-	print(dict.stage.frequency)
 
 
 func init_node() -> void:
@@ -137,10 +137,13 @@ func init_vec():
 	vec.size.letter = Vector2(20, 20)
 	vec.size.icon = Vector2(48, 48)
 	vec.size.number = Vector2(5, 32)
+	vec.size.sixteen = Vector2(16, 16)
 	
 	vec.size.aspect = Vector2(32, 32)
 	vec.size.box = Vector2(100, 100)
-	vec.size.bar = Vector2(5, 12)
+	vec.size.state = Vector2(100, 12)
+	vec.size.tick = Vector2(5, 12)
+	vec.size.stage = Vector2(vec.size.tick)
 	
 	init_window_size()
 
@@ -169,6 +172,17 @@ func init_color():
 	color.stage.splashing = {}
 	color.stage.splashing.fill = Color.from_hsv(0, 1, 0.9)
 	color.stage.splashing.background = Color.from_hsv(0, 0.25, 0.9)
+	
+	color.state = {}
+	color.state.vigor = {}
+	color.state.vigor.fill = Color.from_hsv(120 / h, 1, 0.9)
+	color.state.vigor.background = Color.from_hsv(120 / h, 0.25, 0.9)
+	color.state.standard = {}
+	color.state.standard.fill = Color.from_hsv(30 / h, 1, 0.9)
+	color.state.standard.background = Color.from_hsv(30 / h, 0.25, 0.9)
+	color.state.fatigue = {}
+	color.state.fatigue.fill = Color.from_hsv(0, 1, 0.9)
+	color.state.fatigue.background = Color.from_hsv(0, 0.25, 0.9)
 
 
 func save(path_: String, data_: String):
